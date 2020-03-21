@@ -5,8 +5,8 @@
         <title>Instagram catifier</title>
         
         <link href="./static/assets/cat.ico" rel="icon">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="./static/bootstrap.min.css">
+        <script src="./static/bootstrap.min.js"></script>
     </head>
     <body>
         <div class="container-fluid">
@@ -20,6 +20,13 @@
                 <div class="form-group">
                     <input type="text" class="form-control" id="instagramAccount" placeholder="Enter Instagram account">
                     <small id="accountHelp" class="form-text text-muted text-center">The account should be public otherwise cats can not access it :(</small>
+                </div>
+                <div class="form-group">
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="customSwitch1">
+                        <label class="custom-control-label" for="customSwitch1">I want to get more then 9 photos</label>
+                    </div>
+                    <input type="email" class="form-control" id="userEmail" placeholder="Enter your email">
                 </div>
                 <div class="form-group text-right">
                     <button type="submit" class="btn btn-primary">Catify</button>
