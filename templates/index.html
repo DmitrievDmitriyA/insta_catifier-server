@@ -11,32 +11,34 @@
 
     </head>
     <body>
-        <div class="container-fluid">
-            <h1 class="text-center">Prepare to be catified</h1>
-            <div class="text-center">
-                <img src="./static/assets/cat-min.png" class="img-fluid">
-            </div>
-        </div>
         <div class="container-fluid" style="max-width: 512px">
-            <form>
-                <div class="form-group">
-                    <input type="text" class="form-control" id="instagramAccount" placeholder="Enter Instagram account">
-                    <small id="instagramAccountHelper" class="form-text text-muted text-left">The account should be public otherwise cats can not access it :(</small>
+            <div class="container-fluid">
+                <h1 class="text-center">Prepare to be catified</h1>
+                <div class="text-center">
+                    <img src="./static/assets/cat-min.png" class="img-fluid">
                 </div>
-                <div class="form-group">
-                    <div class="custom-control custom-switch" data-toggle="collapse" data-target="#userEmailField" aria-expanded="false" aria-controls="userEmailField">
-                        <input type="checkbox" class="custom-control-input" id="userEmailSwitch">
-                        <label class="custom-control-label" for="userEmailSwitch">I want to get more then 9 last photos</label>
+            </div>
+            <div class="container-fluid">
+                <form action="submit_form" method="POST">
+                    <div class="form-group">
+                        <input class="form-control" id="instagramAccount" type="text" name="instagramAccount" placeholder="Enter Instagram account" required>
+                        <small class="form-text text-muted text-left" id="instagramAccountHelper">The account should be public otherwise cats can not access it :(</small>
                     </div>
-                    <div class="collapse" id="userEmailField">
-                        <input type="email" class="form-control" id="userEmail" placeholder="Enter your email">
-                        <small id="userEmailHelper" class="form-text text-muted text-left">Cats will process photos and will send a link to the result</small>
+                    <div class="form-group">
+                        <div class="custom-control custom-switch" data-toggle="collapse" data-target="#userEmailField" aria-expanded="false" aria-controls="userEmailField">
+                            <input class="custom-control-input" id="userEmailSwitch" type="checkbox">
+                            <label class="custom-control-label" for="userEmailSwitch">I want to get more then 9 last photos</label>
+                        </div>
+                        <div class="collapse" id="userEmailField">
+                            <input class="form-control" id="userEmail" type="email" name="userEmail" placeholder="Enter your email">
+                            <small class="form-text text-muted text-left" id="userEmailHelper">Cats will process photos and will send a link to the result</small>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group text-right">
-                    <button type="submit" class="btn btn-primary">Catify</button>
-                </div>
-            </form>
+                    <div class="text-right">
+                        <button class="btn btn-primary" type="submit">Catify</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </body>
 </html>

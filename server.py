@@ -10,6 +10,17 @@ def index():
 def home(page_name=None):
     return render_template(f'{page_name}.html')
 
+@app.route('/submit_form', methods=['POST', 'GET'])
+def submit_form():
+    if request.method == 'POST':
+        data = request.form.to_dict()
+        print(request)
+        print (data)
+        return redirect('processing.html')
+    else:
+        return 'something went wrong. try again'
+
+
 #def write_to_file(data):
 #    with open('database.txt', mode='a') as database:
 #        email = data['email']
@@ -25,11 +36,3 @@ def home(page_name=None):
 #        csv_writer = csv.writer(database, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
 #        csv_writer.writerow([email, subject, message])
 #
-#@app.route('/submit_form', methods=['POST', 'GET'])
-#def submit_form():
-#    if request.method == 'POST':
-#        data = request.form.to_dict()
-#        write_to_csv(data)
-#        return redirect('thankyou.html')
-#    else:
-#        return 'something went wrong. try again'
