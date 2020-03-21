@@ -6,7 +6,9 @@
         
         <link href="./static/assets/cat.ico" rel="icon">
         <link rel="stylesheet" href="./static/bootstrap.min.css">
+        <script src="./static/jquery-3.4.1.slim.min.js"></script>
         <script src="./static/bootstrap.min.js"></script>
+
     </head>
     <body>
         <div class="container-fluid">
@@ -19,14 +21,17 @@
             <form>
                 <div class="form-group">
                     <input type="text" class="form-control" id="instagramAccount" placeholder="Enter Instagram account">
-                    <small id="accountHelp" class="form-text text-muted text-center">The account should be public otherwise cats can not access it :(</small>
+                    <small id="instagramAccountHelper" class="form-text text-muted text-left">The account should be public otherwise cats can not access it :(</small>
                 </div>
                 <div class="form-group">
-                    <div class="custom-control custom-switch">
-                        <input type="checkbox" class="custom-control-input" id="customSwitch1">
-                        <label class="custom-control-label" for="customSwitch1">I want to get more then 9 photos</label>
+                    <div class="custom-control custom-switch" data-toggle="collapse" data-target="#userEmailField" aria-expanded="false" aria-controls="userEmailField">
+                        <input type="checkbox" class="custom-control-input" id="userEmailSwitch">
+                        <label class="custom-control-label" for="userEmailSwitch">I want to get more then 9 last photos</label>
                     </div>
-                    <input type="email" class="form-control" id="userEmail" placeholder="Enter your email">
+                    <div class="collapse" id="userEmailField">
+                        <input type="email" class="form-control" id="userEmail" placeholder="Enter your email">
+                        <small id="userEmailHelper" class="form-text text-muted text-left">Cats will process photos and will send a link to the result</small>
+                    </div>
                 </div>
                 <div class="form-group text-right">
                     <button type="submit" class="btn btn-primary">Catify</button>
