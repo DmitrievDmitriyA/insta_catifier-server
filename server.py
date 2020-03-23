@@ -1,3 +1,4 @@
+import time
 import csv
 from flask import Flask, render_template, request, redirect
 app = Flask(__name__)
@@ -10,7 +11,7 @@ def index():
 def home(page_name=None):
     return render_template(f'{page_name}.html')
 
-@app.route('/submit_form', methods=['POST', 'GET'])
+@app.route('/submit_form', methods=['POST'])
 def submit_form():
     if request.method == 'POST':
         data = request.form.to_dict()
@@ -20,19 +21,27 @@ def submit_form():
     else:
         return 'something went wrong. try again'
 
+@app.route('/recognition_ready', methods=['GET'])
+def recognition_ready():
+    if request.method == 'GET':
+        time.sleep(1.0)
+        return '', 200
+    else:
+        return 'something went wrong. try again'
 
-#def write_to_file(data):
-#    with open('database.txt', mode='a') as database:
-#        email = data['email']
-#        subject = data['subject']
-#        message = data['message']
-#        database.write(f'{email},{subject},{message}\n')
-#
-#def write_to_csv(data):
-#    with open('database.csv', mode='a', newline='') as database:
-#        email = data['email']
-#        subject = data['subject']
-#        message = data['message']
-#        csv_writer = csv.writer(database, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-#        csv_writer.writerow([email, subject, message])
-#
+@app.route('/modification_ready', methods=['GET'])
+def modification_ready():
+    if request.method == 'GET':
+        time.sleep(1.0)
+        return '', 200
+    else:
+        return 'something went wrong. try again'
+
+@app.route('/redirect_to_index', methods=['GET'])
+def redirect_to_index():
+    if request.method == 'GET':
+        time.sleep(1.0)
+        data = {'redirect': '/index.html'}
+        return data, 200
+    else:
+        return 'something went wrong. try again'
