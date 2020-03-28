@@ -29,7 +29,7 @@
                             {
                                 $("#currentProgress").text("Cats are done playing!")
                                 $("#cat2").attr("src","./static/assets/cat-min-fade-filled.png");
-                                $.get("/redirect_to_index", function(data, status)
+                                $.get("/redirect_to_gallery", function(data, status)
                                 {
                                     if (data.redirect) 
                                     {

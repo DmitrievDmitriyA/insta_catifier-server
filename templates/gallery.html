@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Instagram catifier</title>
+        
+        <link href="./static/assets/cat.ico" rel="icon">
+        <link rel="stylesheet" href="./static/polaroid.css">
+        <link rel="stylesheet" href="./static/bootstrap.min.css">
+        <script src="./static/jquery-3.4.1.min.js"></script>
+        <script src="./static/bootstrap.min.js"></script>
+
+        <script>
+            $(document).ready(function()
+            {
+                $.get("/get_photos", function(data, status)
+                {
+                    if (status == 'success')
+                    {
+                        var photos = data.photos;
+                        
+                        // We are going to add a row and add two photos to it
+                        // It will continue until we don't run out of photos
+                        var count = 0;
+                        var row_id = -1;
+                        $.each( photos, function( key, value ) 
+                        {
+                            //first add a new row if condition is fulfilled
+                            if (count % 2 == 0)
+                            {
+                                row_id = row_id + 1;
+                                $("#photosContainer").append('<div class="row" id="row' + row_id + '"></div>')
+                            }
+                            
+                            //Then add an image to the row
+                            $("#row" + row_id).append('<img class="col-sm-6 col-md-6 polaroid" src="' + value + '">')
+
+                            count = count + 1;
+                        });
+                    }
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div class="container-fluid" style="max-width: 1024px">
+            <div class="container-fluid" id="photosContainer">
+            </div>
+        </div>
+    </body>
+</html>

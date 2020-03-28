@@ -37,11 +37,22 @@ def modification_ready():
     else:
         return 'something went wrong. try again'
 
-@app.route('/redirect_to_index', methods=['GET'])
-def redirect_to_index():
+@app.route('/redirect_to_<string:page_name>', methods=['GET'])
+def redirect_to(page_name=None):
     if request.method == 'GET':
         time.sleep(0.25)
-        data = {'redirect': '/index.html'}
+        data = {'redirect': f'{page_name}.html'}
+        return data, 200
+    else:
+        return 'something went wrong. try again'
+
+@app.route('/get_photos', methods=['GET'])
+def get_photos():
+    if request.method == 'GET':
+
+        photos = { str(key): './static/assets/cat-min.png' for key in range(10)}
+        
+        data = {'photos': photos}
         return data, 200
     else:
         return 'something went wrong. try again'
