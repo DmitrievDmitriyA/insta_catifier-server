@@ -24,7 +24,7 @@ def submit_form():
 @app.route('/recognition_ready', methods=['GET'])
 def recognition_ready():
     if request.method == 'GET':
-        time.sleep(1.0)
+        time.sleep(0.25)
         return '', 200
     else:
         return 'something went wrong. try again'
@@ -32,7 +32,7 @@ def recognition_ready():
 @app.route('/modification_ready', methods=['GET'])
 def modification_ready():
     if request.method == 'GET':
-        time.sleep(1.0)
+        time.sleep(0.25)
         return '', 200
     else:
         return 'something went wrong. try again'
@@ -40,7 +40,7 @@ def modification_ready():
 @app.route('/redirect_to_index', methods=['GET'])
 def redirect_to_index():
     if request.method == 'GET':
-        time.sleep(1.0)
+        time.sleep(0.25)
         data = {'redirect': '/index.html'}
         return data, 200
     else:

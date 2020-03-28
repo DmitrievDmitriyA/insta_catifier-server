@@ -9,6 +9,23 @@
         <script src="./static/jquery-3.4.1.min.js"></script>
         <script src="./static/bootstrap.min.js"></script>
 
+        <script>
+            $(document).ready(function(){
+                $("input[id='userEmailSwitch']:checkbox")
+                    .change(function() 
+                    {
+                        if ($("#userEmail").attr("required")) // == true
+                        {
+                            $("#userEmail").prop("required", false);
+                        }
+                        else
+                        {
+                            $("#userEmail").prop("required", true);
+                        }
+                    });
+            });
+        </script>
+
         <!--
             Stack/features:
             Bootstrap for Adaptive Web UI creation
@@ -28,7 +45,7 @@
             <div class="container-fluid">
                 <form action="submit_form" method="POST">
                     <div class="form-group">
-                        <input class="form-control" id="instagramAccount" type="text" name="instagramAccount" placeholder="Enter Instagram account" required>
+                        <input class="form-control" id="instagramAccount" type="text" name="instagramAccount" placeholder="Enter Instagram account" required="true">
                         <small class="form-text text-muted text-left" id="instagramAccountHelper">The account should be public otherwise cats can not access it :(</small>
                     </div>
                     <div class="form-group">
