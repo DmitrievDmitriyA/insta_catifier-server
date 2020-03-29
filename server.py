@@ -1,5 +1,5 @@
 import time
-import csv
+import serverHelper
 from flask import Flask, render_template, request, redirect
 app = Flask(__name__)
 
@@ -18,9 +18,11 @@ def home(page_name=None):
 def submit_form():
     if request.method == 'POST':
         data = request.form.to_dict()
-        print(request)
-        print(data)
-        return redirect('processing.html')
+        
+        if serverHelper.validateEmail(data['userEmail']):
+            return redirect('result.html')
+        else:
+            return redirect('processing.html')
     else:
         return 'something went wrong. try again'
 
