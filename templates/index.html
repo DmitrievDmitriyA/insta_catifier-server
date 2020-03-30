@@ -11,7 +11,28 @@
     <script src="./static/bootstrap.min.js"></script>
 
     <script>
+        // Then window is loaded (it will happen only once at the beggining)
+        // check switch and input to sync them.
+        $(window).on("load", function () {
+
+            if ($("#userEmailSwitch").is(':checked'))
+            {
+                if ($("#userEmail").val())
+                {
+                    $('.collapse').slideDown('fast');
+                    $("#userEmail").prop("required", true);
+                }
+                else
+                {
+                    $("#userEmailSwitch").prop("checked", false)
+                }
+            }
+        });
+
         $(document).ready(function () {
+
+            // Adds required attribute to userEmail if the input is visible
+            // (client want to get photos by email).
             $("input[id='userEmailSwitch']:checkbox")
                 .change(function () {
                     if ($("#userEmail").attr("required")) // == true
@@ -23,6 +44,20 @@
                         $("#userEmail").prop("required", true);
                     }
                 });
+
+            // Disabling toogle on collapsing to prevent double clicking.
+            // Should be used together with 'data-toggle="collapse"' removal
+            // from parent div.
+            $("#userEmailSwitch:checkbox").bind('click dblclick', function (evt) {
+                if ($(this).is(":checked"))
+                {
+                    $('.collapse').slideDown('fast');
+                }
+                else
+                {
+                    $('.collapse').slideUp('fast');
+                }
+            })
         });
     </script>
 
@@ -52,8 +87,8 @@
                         public otherwise cats can not access it :(</small>
                 </div>
                 <div class="form-group">
-                    <div class="custom-control custom-switch" data-toggle="collapse" data-target="#userEmailField"
-                        aria-expanded="false" aria-controls="userEmailField">
+                    <div class="custom-control custom-switch" data-target="#userEmailField" aria-expanded="false"
+                        aria-controls="userEmailField">
                         <input class="custom-control-input" id="userEmailSwitch" type="checkbox">
                         <label class="custom-control-label" for="userEmailSwitch">I want to get more then 9 last
                             photos</label>
