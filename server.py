@@ -39,8 +39,8 @@ def submit_form():
 
 @app.route('/processing.html')
 def processing():
-    print(request.args.get('instagramAccount'))
-    return render_template('processing.html')
+    instagramAccount = request.args.get('instagramAccount')
+    return render_template('processing.html', instagramAccount=instagramAccount)
 
 
 @app.route('/recognition_ready')
