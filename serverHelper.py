@@ -9,3 +9,13 @@ def validateEmail(email):
         return True
     else:
         return False
+
+
+def validateInstagramAccount(instagramAccount):
+    # regural expression that used to validate user name
+    regex = '^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$'
+
+    if(re.search(regex, instagramAccount)):
+        return True
+    else:
+        return False
