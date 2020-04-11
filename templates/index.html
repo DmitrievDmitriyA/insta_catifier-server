@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Instagram catifier</title>
+
+    <link href="./static/assets/cat.ico" rel="icon">
+    <link rel="stylesheet" href="./static/bootstrap.min.css">
+    <script src="./static/jquery-3.4.1.min.js"></script>
+    <script src="./static/bootstrap.min.js"></script>
+
+    <script>
+        // Then window is loaded (it will happen only once at the beggining)
+        // check switch and input to sync them.
+        $(window).on("load", function () {
+
+            if ($("#userEmailSwitch").is(':checked'))
+            {
+                if ($("#userEmail").val())
+                {
+                    $('.collapse').slideDown('fast');
+                    $("#userEmail").prop("required", true);
+                }
+                else
+                {
+                    $("#userEmailSwitch").prop("checked", false)
+                }
+            }
+        });
+
+        $(document).ready(function () {
+
+            // Adds required attribute to userEmail if the input is visible
+            // (client want to get photos by email).
+            $("input[id='userEmailSwitch']:checkbox")
+                .change(function () {
+                    if ($("#userEmail").attr("required")) // == true
+                    {
+                        $("#userEmail").prop("required", false);
+                    }
+                    else
+                    {
+                        $("#userEmail").prop("required", true);
+                    }
+                });
+
+            // Disabling toogle on collapsing to prevent double clicking.
+            // Should be used together with 'data-toggle="collapse"' removal
+            // from parent div.
+            $("#userEmailSwitch:checkbox").bind('click dblclick', function (evt) {
+                if ($(this).is(":checked"))
+                {
+                    $('.collapse').slideDown('fast');
+                }
+                else
+                {
+                    $('.collapse').slideUp('fast');
+                }
+            })
+        });
+    </script>
+
+    <!--
+            Stack/features:
+            Bootstrap for Adaptive Web UI creation
+            CSS is used for a simple "static" animation (without a need to change DOM)
+            jQuery is used in order to communiate to server and change DOM dinamically
+        -->
+</head>
+
+<body>
+    <div class="container-fluid" style="max-width: 512px">
+        <div class="container-fluid">
+            <h1 class="text-center">Prepare to be catified</h1>
+            <div class="text-center">
+                <img src="./static/assets/cat-min.png" class="img-fluid">
+            </div>
+        </div>
+        <div class="container-fluid">
+            <form action="submit_form" method="GET">
+                <div class="form-group">
+                    <input class="form-control" id="instagramAccount" type="text" name="instagramAccount"
+                        placeholder="Enter Instagram account" required="true">
+                    <small class="form-text text-muted text-left" id="instagramAccountHelper">The account should be
+                        public otherwise cats can not access it :(</small>
+                </div>
+                <div class="form-group">
+                    <div class="custom-control custom-switch" data-target="#userEmailField" aria-expanded="false"
+                        aria-controls="userEmailField">
+                        <input class="custom-control-input" id="userEmailSwitch" type="checkbox">
+                        <label class="custom-control-label" for="userEmailSwitch">I want to get more then 9 last
+                            photos</label>
+                    </div>
+                    <div class="collapse" id="userEmailField">
+                        <input class="form-control" id="userEmail" type="email" name="userEmail"
+                            placeholder="Enter your email">
+                        <small class="form-text text-muted text-left" id="userEmailHelper">Cats will process photos and
+                            will send a link to the result</small>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <button class="btn btn-primary" type="submit">Catify</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
