@@ -8,6 +8,17 @@ from flask_script import Manager
 import serverHelper
 from cache import ExtendedLFUCache
 
+import dramatiq
+from dramatiq.brokers.rabbitmq import RabbitmqBroker
+#from dramatiq.results.backends import RedisBackend
+#from dramatiq.results import Results
+
+
+#result_backend = RedisBackend()
+broker = RabbitmqBroker()
+#broker.add_middleware(Results(backend=result_backend))
+dramatiq.set_broker(broker)
+
 
 # Initialize logging
 logging.basicConfig(level=logging.INFO)
@@ -21,6 +32,14 @@ cache = ExtendedLFUCache(maxsize=10)
 # Create Flask app and app manager
 flask_app = Flask(__name__)
 manager = Manager(flask_app)
+
+
+@dramatiq.actor
+def hello_world():
+    # response = requests.get(url)
+    # count = len(response.text.split(" "))
+    print('Hello world!')
+    time.sleep(4.25)
 
 
 # Server initialization
@@ -93,6 +112,10 @@ def processing():
 @flask_app.route('/scraping_ready')
 def recognition_ready():
     instagramAccount = request.args.get('instagramAccount')
+    message = hello_world.send()
+    time.sleep(0.25)
+    message.get_result(block=True)
+    print('Yes!')
     if instagramAccount in cache:
             return '', 200
 

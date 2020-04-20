@@ -8,3 +8,4 @@ pip install Flask
 pip install Flask-Script
 pip install minio
 pip install ..\insta_catifier\dist\catifier-0.1.tar.gz
+pip install -U "dramatiq[all]"
