@@ -1,5 +1,5 @@
 
-import sys, os, shutil
+import sys, os
 sys.path.append(os.path.abspath('..\\'))
 import catifier.scraping as scraping
 import dataBaseAdapter
@@ -20,7 +20,3 @@ def scrapePhotos(username):
     sourceUserFolder = dataBaseAdapter.sourceUserFolder(username)
     scraping.scrape_photos(sourceUserFolder)
     return loadPhotosToMemory(sourceUserFolder)
-
-def removeSources(username):
-    sourceUserFolder = dataBaseAdapter.sourceUserFolder(username)
-    shutil.rmtree(sourceUserFolder)
