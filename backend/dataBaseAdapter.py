@@ -1,6 +1,7 @@
 import sys, os, shutil
 databasePath = os.path.abspath('..\\') + 'database\\'
 
+
 def sourceUserFolder(username):
     return databasePath + 'sources\\' + username + '\\'
 
