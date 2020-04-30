@@ -1,4 +1,4 @@
-import sys, os
+import sys, os, shutil
 databasePath = os.path.abspath('..\\') + 'database\\'
 
 def sourceUserFolder(username):
@@ -7,3 +7,11 @@ def sourceUserFolder(username):
 
 def resultUserFolder(username):
     return databasePath + 'results\\' + username + '\\'
+
+
+def removeSources(username):
+    shutil.rmtree(sourceUserFolder(username))
+    
+
+def removeResults(username):
+    shutil.rmtree(resultUserFolder(username))
