@@ -1,13 +1,12 @@
-import sys, os
+import sys, os, time, datetime, json
 sys.path.append(os.path.abspath('.\\backend'))
-import time
-import datetime
-import serverHelper
-from flask import Flask, render_template, request, redirect, url_for
-from threading import RLock
-from cachetools import cached, TTLCache
-import backend.scrapingAdapter as scrapingAdapter
 import backend.enhancementAdapter as enhancementAdapter
+import backend.scrapingAdapter as scrapingAdapter
+import backend.dataBaseAdapter as dataBaseAdapter
+from cachetools import cached, TTLCache
+from threading import RLock
+from flask import Flask, render_template, request, redirect, url_for
+import serverHelper
 
 
 lock = RLock()
@@ -18,13 +17,14 @@ class ExtendedTTLCache(TTLCache):
         key, value = super().popitem()
         print(datetime.datetime.now())
         with lock:
-            enhancementAdapter.removeResults(key)
+            #TODO: should be fixed
+            #enhancementAdapter.removeResults(key)
             print('Removed results')
         return key, value
 
 
 flask_app = Flask(__name__)
-cache = ExtendedTTLCache(maxsize=100, ttl=60) #ttl - time to live in seconds
+cache = ExtendedTTLCache(maxsize=100, ttl=60)  # ttl - time to live in seconds
 
 
 # falsk uses GET request for every page by default, so there is no need to use it
@@ -65,7 +65,6 @@ def processing():
 
 @flask_app.route('/scraping_ready')
 def recognition_ready():
-    print('/scraping_ready')
     instagramAccount = request.args.get('instagramAccount')
     scrapingAdapter.scrapePhotos(instagramAccount)
     return '', 200
@@ -73,21 +72,35 @@ def recognition_ready():
 
 @flask_app.route('/modification_ready')
 def modification_ready():
-    print('/modification_ready')
     instagramAccount = request.args.get('instagramAccount')
     enhancementAdapter.add_cats(instagramAccount)
     return '', 200
+
+
+@flask_app.route('/redirect_to_gallery')
+def redirect_to_gallery():
+    time.sleep(1)
+    instagramAccount = request.args.get('instagramAccount')
+    data = {'redirect': url_for('gallery', instagramAccount=instagramAccount)}
+    return data, 200 
+
+
+@flask_app.route('/gallery.html')
+def gallery():
+    instagramAccount = request.args.get('instagramAccount')
+    return render_template('gallery.html', instagramAccount=instagramAccount)
+
+
+@flask_app.route('/get_photos')
+def get_photos():
+    instagramAccount = request.args.get('instagramAccount')
+    data = dataBaseAdapter.get_results_from_bucket(instagramAccount)
+    print(data)
+    return data, 200
 
 
 @flask_app.route('/redirect_to_<string:page_name>')
 def redirect_to(page_name=None):
     time.sleep(1)
     data = {'redirect': f'{page_name}.html'}
-    return data, 200
-
-
-@flask_app.route('/get_photos')
-def get_photos():
-    photos = {str(key): './static/assets/cat-min.png' for key in range(10)}
-    data = {'photos': photos}
     return data, 200

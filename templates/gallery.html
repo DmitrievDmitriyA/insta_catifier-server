@@ -13,16 +13,14 @@
 
     <script>
         $(document).ready(function () {
-            $.get("/get_photos", function (data, status) {
-                if (status == 'success')
-                {
-                    var photos = data.photos;
-
+            $.get("/get_photos", { instagramAccount: "{{ instagramAccount }}" })
+                .done(function (data) {
                     // We are going to add a row and add two photos to it
                     // It will continue until we don't run out of photos
                     var count = 0;
                     var row_id = -1;
-                    $.each(photos, function (key, value) {
+
+                    $.each(JSON.parse(data), function (index, value) {
                         //first add a new row if condition is fulfilled
                         if (count % 2 == 0)
                         {
@@ -35,8 +33,7 @@
 
                         count = count + 1;
                     });
-                }
-            });
+                });
         });
     </script>
 </head>

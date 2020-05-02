@@ -18,14 +18,15 @@
         // That's why below methods are nested (to synchronize calls)
         $(document).ready(function () {
             $.get("/scraping_ready", { instagramAccount: "{{ instagramAccount }}" })
-            .done(function (data) {
+            .done(function () {
                 $("#currentProgress").text("Cats are messing with peoples faces...")
                 $("#cat1").attr("src", "./static/assets/cat-min-fade-filled.png");
                 $.get("/modification_ready", { instagramAccount: "{{ instagramAccount }}" })
-                .done(function (data) {
+                .done(function () {
                     $("#currentProgress").text("Cats are done playing!")
                     $("#cat2").attr("src", "./static/assets/cat-min-fade-filled.png");
-                    $.get("/redirect_to_gallery", function (data, status) {
+                    $.get("/redirect_to_gallery", { instagramAccount: "{{ instagramAccount }}" })
+                    .done(function (data) {
                         window.location.href = data.redirect;
                     });
                 })
