@@ -10,6 +10,8 @@ import backend.dataBaseAdapter as dataBaseAdapter
 # but there is no logic that checks that
 # At the moment it's not an issue because a relativly small cache size is used (It gets updated before 
 # the issue could appear) 
+# - If user updates account, but his account is stored in cache, the update will not be visible
+# until cache is not cleared
 
 
 lock = RLock()

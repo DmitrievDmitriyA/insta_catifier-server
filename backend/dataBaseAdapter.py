@@ -1,9 +1,20 @@
-import sys, os, shutil, json
+import sys, os, shutil, json, ntpath, logging
 databasePath = os.path.abspath('..\\') + '\\temporary\\'
 from minio import Minio
 from minio.error import (ResponseError, BucketAlreadyOwnedByYou, BucketAlreadyExists)
 
+
+# Initialize logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+
 minioClient = Minio('127.0.0.1:9000', access_key='minioadmin', secret_key='minioadmin', secure=False)
+
+
+def _path_leaf(path):
+    head, tail = ntpath.split(path)
+    return tail or ntpath.basename(head)
 
 
 def sourceUserFolder(username):
@@ -38,7 +49,7 @@ def load_results_to_bucket(photos, username):
 
 
 def remove_results_from_bucket(username):
-    print('Going to remove ' + username)
+    logger.info('Going to remove ' + username)
 
     # Remove multiple objects in a single library call.
     try:
@@ -61,6 +72,12 @@ def get_results_from_bucket(username):
         urls.append(presignedURL)
 
     return json.dumps(urls)
+
+
+def get_accounts_from_bucket():
+    objects = minioClient.list_objects_v2('results')
+    return [_path_leaf(obj.object_name) for obj in objects]
+
 
 # def foo():
 #     # Make a bucket with the make_bucket API call.

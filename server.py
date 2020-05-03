@@ -1,15 +1,41 @@
-import sys, os, time, json
+import sys, os, time, json, logging
 sys.path.append(os.path.abspath('.\\backend'))
 import backend.enhancementAdapter as enhancementAdapter
 import backend.scrapingAdapter as scrapingAdapter
 import backend.dataBaseAdapter as dataBaseAdapter
 from flask import Flask, render_template, request, redirect, url_for
+from flask_script import Manager
 import serverHelper
 from cache import ExtendedLFUCache
 
 
-flask_app = Flask(__name__)
+# Initialize logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+
+# Create cache
 cache = ExtendedLFUCache(maxsize=10)
+
+
+# Create Flask app and app manager
+flask_app = Flask(__name__)
+manager = Manager(flask_app)
+
+
+# Server initialization
+@manager.command
+def runserver():
+    # let's initialize cache first with database content
+    accounts = dataBaseAdapter.get_accounts_from_bucket()
+    print(accounts)
+    for account in accounts:
+        data = dataBaseAdapter.get_results_from_bucket(account)
+        cache[account] = data
+
+    logger.info('cache is initialized: ' + key for key, value in cache)
+
+    flask_app.run()
 
 
 # === Home page ===
@@ -112,3 +138,7 @@ def get_photos():
     data = dataBaseAdapter.get_results_from_bucket(instagramAccount)
     cache[instagramAccount] = data
     return data, 200
+
+
+if __name__ == "__main__":
+    manager.run()
