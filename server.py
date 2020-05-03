@@ -95,7 +95,6 @@ def gallery():
 def get_photos():
     instagramAccount = request.args.get('instagramAccount')
     data = dataBaseAdapter.get_results_from_bucket(instagramAccount)
-    print(data)
     return data, 200
 
 

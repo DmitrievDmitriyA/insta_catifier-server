@@ -29,9 +29,9 @@
                         }
 
                         //Then add an image to the row
-                        $("#row" + row_id).append('<img class="col-sm-6 col-md-6 polaroid" src="' + value + '">')
+                        $("#row" + row_id).append('<div class="col-sm-6 col-md-6 my-auto"><img class="img-fluid img-thumbnail" src="' + value + '"></div>')
 
-                        count = count + 1;
+                        count += 1;
                     });
                 });
         });
