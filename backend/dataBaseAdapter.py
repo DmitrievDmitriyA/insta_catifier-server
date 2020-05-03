@@ -37,6 +37,21 @@ def load_results_to_bucket(photos, username):
         photosCount += 1
 
 
+def remove_results_from_bucket(username):
+    print('Going to remove ' + username)
+
+    # Remove multiple objects in a single library call.
+    try:
+        objects = minioClient.list_objects_v2('results', prefix=username + '/')
+        objects_to_delete = [obj.object_name for obj in objects]
+        # force evaluation of the remove_objects() call by iterating over
+        # the returned value.
+        for del_err in minioClient.remove_objects('results', objects_to_delete):
+            print("Deletion Error: {}".format(del_err))
+    except ResponseError as err:
+        print(err)
+
+
 def get_results_from_bucket(username):
     urls = []
     results = minioClient.list_objects_v2('results', prefix=username + '/')
