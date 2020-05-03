@@ -1,5 +1,5 @@
 import sys, os, shutil, json
-databasePath = os.path.abspath('..\\') + '\\database\\'
+databasePath = os.path.abspath('..\\') + '\\temporary\\'
 from minio import Minio
 from minio.error import (ResponseError, BucketAlreadyOwnedByYou, BucketAlreadyExists)
 
@@ -14,12 +14,17 @@ def resultUserFolder(username):
     return databasePath + 'results\\' + username + '\\'
 
 
-# def removeSources(username):
-#     shutil.rmtree(sourceUserFolder(username))
+def _removeSources(username):
+    shutil.rmtree(sourceUserFolder(username))
     
 
-# def removeResults(username):
-#     shutil.rmtree(resultUserFolder(username))
+def _removeResults(username):
+    shutil.rmtree(resultUserFolder(username))
+
+
+def remove_temporary_folders(username):
+    _removeSources(username)
+    _removeResults(username)
 
 
 def load_results_to_bucket(photos, username):

@@ -13,3 +13,6 @@ def add_cats(username):
 
     # Load results to bucket
     dataBaseAdapter.load_results_to_bucket([photo['resultPath'] for photo in results ], username)
+
+    # Clean temporary folders
+    dataBaseAdapter.remove_temporary_folders(username)
