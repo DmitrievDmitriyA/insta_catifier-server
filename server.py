@@ -38,6 +38,19 @@ def runserver():
     flask_app.run()
 
 
+# === Errors ===
+
+
+@flask_app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
+
+
+@flask_app.errorhandler(Exception)
+def error_page(e):
+    return render_template('error.html'), 500
+
+
 # === Home page ===
 
 
