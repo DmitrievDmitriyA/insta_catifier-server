@@ -1,4 +1,4 @@
-import sys, os, time, json, logging
+import sys, os, time, json
 sys.path.append(os.path.abspath('.\\backend'))
 import backend.enhancementAdapter as enhancementAdapter
 import backend.scrapingAdapter as scrapingAdapter
@@ -7,11 +7,7 @@ from flask import Flask, render_template, request, redirect, url_for
 from flask_script import Manager
 import serverHelper
 from cache import ExtendedLFUCache
-
-
-# Initialize logging
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+from logging import FileHandler, Formatter
 
 
 # Create cache
@@ -20,6 +16,14 @@ cache = ExtendedLFUCache(maxsize=10)
 
 # Create Flask app and app manager
 flask_app = Flask(__name__)
+# Logging initialization
+file_handler = FileHandler('.\\logs\\server.log')
+file_formatter = Formatter(
+    fmt='%(name)s %(levelname)s %(asctime)s %(message)s',
+    datefmt='%d-%m-%Y %I:%M:%S')
+file_handler.setFormatter(file_formatter)
+flask_app.logger.addHandler(file_handler)
+logger = flask_app.logger
 manager = Manager(flask_app)
 
 
@@ -27,13 +31,17 @@ manager = Manager(flask_app)
 @manager.command
 def runserver():
     # let's initialize cache first with database content
+    logger.info('Server initialization')
+
     accounts = dataBaseAdapter.get_accounts_from_bucket()
-    print(accounts)
+    
+    logger.info('Accounts retrieved: ')
+    logger.info(accounts)
     for account in accounts:
         data = dataBaseAdapter.get_results_from_bucket(account)
         cache[account] = data
 
-    logger.info('cache is initialized: ' + key for key, value in cache)
+    logger.info('Cache is initialized')
 
     flask_app.run()
 
@@ -72,11 +80,12 @@ def submit_form():
 
     if (userEmail:= request.args.get('userEmail')):
         if serverHelper.validateEmail(userEmail):
-            logger.info('Incoming request: ' + str(instagramAccount) + ', ' + str(userEmail))
+            logger.info(f'Incoming request: {0}, {1}', str(instagramAccount), str(userEmail))
             return redirect(url_for('result', instagramAccount=instagramAccount, userEmail=userEmail))
         else:
             return redirect(url_for('error'))
     else:
+        logger.info('Incoming request: {0}', str(instagramAccount))
         return redirect(url_for('processing', instagramAccount=instagramAccount))
 
 
