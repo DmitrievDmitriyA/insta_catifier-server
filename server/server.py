@@ -3,8 +3,7 @@ from flask import Flask, render_template, request, redirect, url_for
 from flask_script import Manager
 from cache import ExtendedLFUCache
 from logging import FileHandler, Formatter
-import enhancementAdapter
-import scrapingAdapter
+import catifierAdapter
 import dataBaseAdapter
 import serverHelper
 
@@ -123,7 +122,7 @@ def recognition_ready():
     if instagramAccount in cache:
             return '', 200
 
-    scrapingAdapter.scrapePhotos(instagramAccount)
+    catifierAdapter.scrapePhotos(instagramAccount)
     return '', 200
 
 
@@ -133,7 +132,7 @@ def modification_ready():
     if instagramAccount in cache:
         return '', 200
 
-    enhancementAdapter.add_cats(instagramAccount)
+    catifierAdapter.add_cats(instagramAccount)
     return '', 200
 
 
@@ -164,6 +163,7 @@ def get_photos():
 
     data = dataBaseAdapter.get_results_from_bucket(instagramAccount)
     cache[instagramAccount] = data
+    logger.info(f'Get photos is finished: {str(instagramAccount)}')
     return data, 200
 
 
@@ -181,6 +181,7 @@ def result():
 def send_task():
     instagramAccount = request.form.get('instagramAccount')
     userEmail = request.form.get('userEmail')
+    logger.info(f'Send task is finished: {str(instagramAccount)}, {str(userEmail)}')
     return '', 200
 
 

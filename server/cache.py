@@ -17,25 +17,20 @@ lock = RLock()
 
 
 class ExtendedLFUCache(LFUCache):
-    def locked_access(self, func):
-        def wrapper():
-            with lock:
-                func()
-        return wrapper
 
-    @locked_access
     def __getitem__(self, key):
-        return super().__getitem__(key)
+        with lock:
+            return super().__getitem__(key)
 
-    @locked_access
     def __setitem__(self, key, value):
-        super().__setitem__(key, value)
+        with lock:
+            super().__setitem__(key, value)
 
-    @locked_access
     def __delitem__(self, key):
-        super().__delitem__(key)
-        dataBaseAdapter.remove_results_from_bucket(key)
+        with lock:
+            super().__delitem__(key)
+            dataBaseAdapter.remove_results_from_bucket(key)
 
-    @locked_access
     def popitem(self):
-        super().popitem()
+        with lock:
+            super().popitem()

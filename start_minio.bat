@@ -1,1 +1,1 @@
-minio.exe server ..\database
+minio.exe server database

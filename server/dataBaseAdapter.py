@@ -1,5 +1,5 @@
 import sys, os, shutil, json, ntpath
-databasePath = os.path.abspath('..\\') + '\\temporary\\'
+databasePath = os.path.abspath('.\\') + '\\temporary\\'
 from minio import Minio
 from minio.error import (ResponseError, BucketAlreadyOwnedByYou, BucketAlreadyExists)
 

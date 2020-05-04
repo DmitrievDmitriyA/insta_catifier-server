@@ -1,1 +1,1 @@
-python server.py runserver
+python server\server.py runserver
