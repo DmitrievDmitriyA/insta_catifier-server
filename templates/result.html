@@ -11,13 +11,23 @@
     <script src="./static/bootstrap.min.js"></script>
 </head>
 
+<script>
+    $(document).ready(function () {
+
+        $("#emailContainer").append('{{ userEmail }}.')
+
+        $.post("/send_task", { instagramAccount: "{{ instagramAccount }}", userEmail: "{{ userEmail }}" });
+        
+    });
+</script>
+
 <body>
     <div class="container-fluid" style="max-width: 512px">
         <div class="container-fluid">
             <h3 class="text-center" id="mainText">
-                Cats are busy processing your request. 
-                Once they are done, they will contact you using your email address. 
-                Meanwhile you can try to catify another account.
+                <p>Cats are busy processing your request.</p>
+                <p id="emailContainer">Once they are done, they will contact you by </p> 
+                <p>Meanwhile, try to catify another account,</p>
             </h3>
             <div class="text-center">
                 <img src="./static/assets/cat-min.png" class="img-fluid">

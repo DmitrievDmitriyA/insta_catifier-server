@@ -59,7 +59,8 @@ def submit_form():
 
     if (userEmail:= request.args.get('userEmail')):
         if serverHelper.validateEmail(userEmail):
-            return redirect(url_for('result', userEmail=userEmail))
+            logger.info('Incoming request: ' + str(instagramAccount) + ', ' + str(userEmail))
+            return redirect(url_for('result', instagramAccount=instagramAccount, userEmail=userEmail))
         else:
             return redirect(url_for('error'))
     else:
@@ -138,6 +139,24 @@ def get_photos():
     data = dataBaseAdapter.get_results_from_bucket(instagramAccount)
     cache[instagramAccount] = data
     return data, 200
+
+
+# === Result page ===
+
+
+@flask_app.route('/result.html')
+def result():
+    instagramAccount = request.args.get('instagramAccount')
+    userEmail = request.args.get('userEmail')
+    return render_template('result.html', instagramAccount=instagramAccount, userEmail=userEmail)
+
+
+@flask_app.route('/send_task', methods=['POST'])
+def send_task():
+    instagramAccount = request.form.get('instagramAccount')
+    userEmail = request.form.get('userEmail')
+    print("Received: " + str(instagramAccount) + ' ' + str(userEmail))
+    return '', 200
 
 
 if __name__ == "__main__":
