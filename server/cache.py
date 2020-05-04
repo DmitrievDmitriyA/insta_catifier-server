@@ -1,7 +1,6 @@
-import datetime
-from cachetools import cached, LFUCache
+from cachetools import LFUCache
 from threading import RLock
-import backend.dataBaseAdapter as dataBaseAdapter
+import dataBaseAdapter
 
 
 # Simple thread-safe caching to speed things up a bit
@@ -18,19 +17,25 @@ lock = RLock()
 
 
 class ExtendedLFUCache(LFUCache):
+    def locked_access(self, func):
+        def wrapper():
+            with lock:
+                func()
+        return wrapper
+
+    @locked_access
     def __getitem__(self, key):
-        with lock:
-            return super().__getitem__(key)
+        return super().__getitem__(key)
 
+    @locked_access
     def __setitem__(self, key, value):
-        with lock:
-            super().__setitem__(key, value)
+        super().__setitem__(key, value)
 
+    @locked_access
     def __delitem__(self, key):
-        with lock:
-            super().__delitem__(key)
-            dataBaseAdapter.remove_results_from_bucket(key)
+        super().__delitem__(key)
+        dataBaseAdapter.remove_results_from_bucket(key)
 
+    @locked_access
     def popitem(self):
-        with lock:
-            super().popitem()
+        super().popitem()

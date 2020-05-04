@@ -1,12 +1,11 @@
-import sys, os, time, json
-sys.path.append(os.path.abspath('.\\backend'))
+import time, json
 from flask import Flask, render_template, request, redirect, url_for
 from flask_script import Manager
 from cache import ExtendedLFUCache
 from logging import FileHandler, Formatter
-import backend.enhancementAdapter as enhancementAdapter
-import backend.scrapingAdapter as scrapingAdapter
-import backend.dataBaseAdapter as dataBaseAdapter
+import enhancementAdapter
+import scrapingAdapter
+import dataBaseAdapter
 import serverHelper
 
 
