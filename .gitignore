@@ -4,4 +4,5 @@ venv
 __pycache__
 *.log
 
-# Project
+# ignore MinIO database folder. It's placed there for convinience
+database

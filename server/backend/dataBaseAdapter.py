@@ -74,21 +74,3 @@ def get_results_from_bucket(username):
 def get_accounts_from_bucket():
     objects = minioClient.list_objects_v2('results')
     return [_path_leaf(obj.object_name) for obj in objects]
-
-
-# def foo():
-#     # Make a bucket with the make_bucket API call.
-#     try:
-#         minioClient.make_bucket("maylogs")
-#     except BucketAlreadyOwnedByYou as err:
-#         pass
-#     except BucketAlreadyExists as err:
-#         pass
-#     except ResponseError as err:
-#         raise
-
-#     # Put an object 'pumaserver_debug.log' with contents from 'pumaserver_debug.log'.
-#     try:
-#         minioClient.fput_object('maylogs', 'pumaserver_debug.log', '/tmp/pumaserver_debug.log')
-#     except ResponseError as err:
-#         print(err)
