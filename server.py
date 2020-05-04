@@ -11,7 +11,7 @@ import serverHelper
 
 
 # Create cache
-cache = ExtendedLFUCache(maxsize=1)
+cache = ExtendedLFUCache(maxsize=10)
 
 
 # Create Flask app
