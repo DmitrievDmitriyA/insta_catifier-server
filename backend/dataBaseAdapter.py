@@ -1,12 +1,7 @@
-import sys, os, shutil, json, ntpath, logging
+import sys, os, shutil, json, ntpath
 databasePath = os.path.abspath('..\\') + '\\temporary\\'
 from minio import Minio
 from minio.error import (ResponseError, BucketAlreadyOwnedByYou, BucketAlreadyExists)
-
-
-# Initialize logging
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
 
 
 minioClient = Minio('127.0.0.1:9000', access_key='minioadmin', secret_key='minioadmin', secure=False)
@@ -49,7 +44,7 @@ def load_results_to_bucket(photos, username):
 
 
 def remove_results_from_bucket(username):
-    logger.info('Going to remove ' + username)
+    # logger.info(f'Going to remove {username}')
 
     # Remove multiple objects in a single library call.
     try:
@@ -58,9 +53,11 @@ def remove_results_from_bucket(username):
         # force evaluation of the remove_objects() call by iterating over
         # the returned value.
         for del_err in minioClient.remove_objects('results', objects_to_delete):
-            print("Deletion Error: {}".format(del_err))
+            # logger.error(f"Deletion Error: {del_err}")
+            pass
     except ResponseError as err:
-        print(err)
+        # logger.error(err)
+        pass
 
 
 def get_results_from_bucket(username):

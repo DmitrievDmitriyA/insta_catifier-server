@@ -1,21 +1,23 @@
 import sys, os, time, json
 sys.path.append(os.path.abspath('.\\backend'))
+from flask import Flask, render_template, request, redirect, url_for
+from flask_script import Manager
+from cache import ExtendedLFUCache
+from logging import FileHandler, Formatter
 import backend.enhancementAdapter as enhancementAdapter
 import backend.scrapingAdapter as scrapingAdapter
 import backend.dataBaseAdapter as dataBaseAdapter
-from flask import Flask, render_template, request, redirect, url_for
-from flask_script import Manager
 import serverHelper
-from cache import ExtendedLFUCache
-from logging import FileHandler, Formatter
 
 
 # Create cache
-cache = ExtendedLFUCache(maxsize=10)
+cache = ExtendedLFUCache(maxsize=1)
 
 
-# Create Flask app and app manager
+# Create Flask app
 flask_app = Flask(__name__)
+
+
 # Logging initialization
 file_handler = FileHandler('.\\logs\\server.log')
 file_formatter = Formatter(
@@ -24,6 +26,9 @@ file_formatter = Formatter(
 file_handler.setFormatter(file_formatter)
 flask_app.logger.addHandler(file_handler)
 logger = flask_app.logger
+
+
+# Create flask app manager
 manager = Manager(flask_app)
 
 
@@ -80,12 +85,12 @@ def submit_form():
 
     if (userEmail:= request.args.get('userEmail')):
         if serverHelper.validateEmail(userEmail):
-            logger.info(f'Incoming request: {0}, {1}', str(instagramAccount), str(userEmail))
+            logger.info(f'Incoming request: {str(instagramAccount)}, {str(userEmail)}')
             return redirect(url_for('result', instagramAccount=instagramAccount, userEmail=userEmail))
         else:
             return redirect(url_for('error'))
     else:
-        logger.info('Incoming request: {0}', str(instagramAccount))
+        logger.info(f'Incoming request: {str(instagramAccount)}')
         return redirect(url_for('processing', instagramAccount=instagramAccount))
 
 
@@ -177,7 +182,6 @@ def result():
 def send_task():
     instagramAccount = request.form.get('instagramAccount')
     userEmail = request.form.get('userEmail')
-    print("Received: " + str(instagramAccount) + ' ' + str(userEmail))
     return '', 200
 
 
