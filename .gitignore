@@ -6,3 +6,7 @@ __pycache__
 
 # ignore MinIO database folder. It's placed there for convinience
 database
+
+#package creation
+*egg-info*
+dist
