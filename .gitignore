@@ -10,3 +10,4 @@ database
 #package creation
 *egg-info*
 dist
+build
