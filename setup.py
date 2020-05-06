@@ -6,6 +6,6 @@ setup(
     packages=find_packages(),
     install_requires=["Flask", "Flask-Script", "minio", "catifier", "cachetools"],
     package_data={
-        "catifier-server": ["statis/*", "templates/*"],
+        "catifier-server": ["static/*", "templates/*", "secret.json"],
     }
 )

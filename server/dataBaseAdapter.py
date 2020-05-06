@@ -2,9 +2,20 @@ import sys, os, shutil, json, ntpath
 databasePath = os.path.abspath('.\\') + '\\temporary\\'
 from minio import Minio
 from minio.error import (ResponseError, BucketAlreadyOwnedByYou, BucketAlreadyExists)
+from pkg_resources import resource_filename
 
 
-minioClient = Minio('127.0.0.1:9000', access_key='minioadmin', secret_key='minioadmin', secure=False)
+access_key = None
+secret_key = None
+
+filePath = resource_filename(__name__, 'secret.json')
+with open(filePath, 'r') as json_file:
+    data = json.load(json_file)
+    access_key = data['access_key']
+    secret_key = data['secret_key']
+
+
+minioClient = Minio('127.0.0.1:9000', access_key=access_key, secret_key=secret_key, secure=False)
 
 
 def _path_leaf(path):
