@@ -1,1 +1,1 @@
-web: gunicorn server:insta-catifier
+web: gunicorn server.run:flask_app
