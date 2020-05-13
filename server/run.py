@@ -1,11 +1,11 @@
 import time, json
 from flask import Flask, render_template, request, redirect, url_for
 from flask_script import Manager
-from cache import ExtendedLFUCache
+from server.cache import ExtendedLFUCache
 from logging import FileHandler, Formatter
-import catifierAdapter
-import dataBaseAdapter
-import serverHelper
+import server.catifierAdapter
+import server.dataBaseAdapter
+import server.serverHelper
 
 
 # Create cache
