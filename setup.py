@@ -4,7 +4,7 @@ setup(
     name="catifier-server",
     version="0.1",
     packages=find_packages(),
-    install_requires=["Flask", "Flask-Script", "minio", "catifier", "cachetools"],
+    install_requires=["Flask", "Flask-Script", "minio", "catifier", "cachetools", "gunicorn"],
     package_data={
         "catifier-server": ["static/*", "templates/*", "secret.json"],
     }
