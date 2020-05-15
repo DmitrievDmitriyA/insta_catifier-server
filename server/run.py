@@ -17,13 +17,13 @@ flask_app = Flask(__name__)
 
 
 # Logging initialization
-file_handler = FileHandler('./logs/server.log')
-file_formatter = Formatter(
-    fmt='%(name)s %(levelname)s %(asctime)s %(message)s',
-    datefmt='%d-%m-%Y %I:%M:%S')
-file_handler.setFormatter(file_formatter)
-flask_app.logger.addHandler(file_handler)
-logger = flask_app.logger
+# file_handler = FileHandler('./logs/server.log')
+#file_formatter = Formatter(
+    # fmt='%(name)s %(levelname)s %(asctime)s %(message)s',
+    # datefmt='%d-%m-%Y %I:%M:%S')
+# file_handler.setFormatter(file_formatter)
+# flask_app.logger.addHandler(file_handler)
+# logger = flask_app.logger
 
 
 # Create flask app manager
@@ -34,17 +34,17 @@ manager = Manager(flask_app)
 @manager.command
 def runserver():
     # let's initialize cache first with database content
-    logger.info('Server initialization')
+    # logger.info('Server initialization')
 
     accounts = dataBaseAdapter.get_accounts_from_bucket()
     
-    logger.info('Accounts retrieved: ')
-    logger.info(accounts)
+    # logger.info('Accounts retrieved: ')
+    # logger.info(accounts)
     for account in accounts:
         data = dataBaseAdapter.get_results_from_bucket(account)
         cache[account] = data
 
-    logger.info('Cache is initialized')
+    # logger.info('Cache is initialized')
 
     flask_app.run()
 
@@ -83,12 +83,12 @@ def submit_form():
 
     if (userEmail:= request.args.get('userEmail')):
         if serverHelper.validateEmail(userEmail):
-            logger.info(f'Incoming request: {str(instagramAccount)}, {str(userEmail)}')
+            # logger.info(f'Incoming request: {str(instagramAccount)}, {str(userEmail)}')
             return redirect(url_for('result', instagramAccount=instagramAccount, userEmail=userEmail))
         else:
             return redirect(url_for('error'))
     else:
-        logger.info(f'Incoming request: {str(instagramAccount)}')
+        # logger.info(f'Incoming request: {str(instagramAccount)}')
         return redirect(url_for('processing', instagramAccount=instagramAccount))
 
 
@@ -163,7 +163,7 @@ def get_photos():
 
     data = dataBaseAdapter.get_results_from_bucket(instagramAccount)
     cache[instagramAccount] = data
-    logger.info(f'Get photos is finished: {str(instagramAccount)}')
+    # logger.info(f'Get photos is finished: {str(instagramAccount)}')
     return data, 200
 
 
