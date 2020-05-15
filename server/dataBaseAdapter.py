@@ -1,5 +1,5 @@
 import sys, os, shutil, json, ntpath
-databasePath = os.path.abspath('.\\') + '\\temporary\\'
+temporaryDatabasePath = os.path.abspath('./') + '/temporary/'
 from minio import Minio
 from minio.error import (ResponseError, BucketAlreadyOwnedByYou, BucketAlreadyExists)
 from pkg_resources import resource_filename
@@ -26,11 +26,11 @@ def _path_leaf(path):
 
 
 def sourceUserFolder(username):
-    return databasePath + 'sources\\' + username + '\\'
+    return temporaryDatabasePath + 'sources/' + username + '/'
 
 
 def resultUserFolder(username):
-    return databasePath + 'results\\' + username + '\\'
+    return temporaryDatabasePath + 'results/' + username + '/'
 
 
 def _removeSources(username):

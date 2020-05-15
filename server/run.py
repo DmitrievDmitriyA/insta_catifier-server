@@ -3,9 +3,9 @@ from flask import Flask, render_template, request, redirect, url_for
 from flask_script import Manager
 from server.cache import ExtendedLFUCache
 from logging import FileHandler, Formatter
-import server.catifierAdapter
-import server.dataBaseAdapter
-import server.serverHelper
+import server.catifierAdapter as catifierAdapter
+import server.dataBaseAdapter as dataBaseAdapter
+import server.serverHelper as serverHelper
 
 
 # Create cache
@@ -17,7 +17,7 @@ flask_app = Flask(__name__)
 
 
 # Logging initialization
-file_handler = FileHandler('.\\logs\\server.log')
+file_handler = FileHandler('./logs/server.log')
 file_formatter = Formatter(
     fmt='%(name)s %(levelname)s %(asctime)s %(message)s',
     datefmt='%d-%m-%Y %I:%M:%S')

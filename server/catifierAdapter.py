@@ -1,7 +1,7 @@
 import sys, os
 import catifier.enhancement as enhancement
 import catifier.scraping as scraping
-import server.dataBaseAdapter
+import server.dataBaseAdapter as dataBaseAdapter
 
 
 def add_cats(username):

@@ -1,6 +1,6 @@
 from cachetools import LFUCache
 from threading import RLock
-import server.dataBaseAdapter
+import server.dataBaseAdapter as dataBaseAdapter
 
 
 # Simple thread-safe caching to speed things up a bit
