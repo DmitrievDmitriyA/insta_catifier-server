@@ -17,7 +17,7 @@ flask_app = Flask(__name__)
 
 
 # Logging initialization
-file_handler = FileHandler('./logs/server.log')
+file_handler = FileHandler('./server_logs/server.log')
 file_formatter = Formatter(
     fmt='%(name)s %(levelname)s %(asctime)s %(message)s',
     datefmt='%d-%m-%Y %I:%M:%S')

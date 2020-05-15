@@ -2,13 +2,12 @@ import sys, os, shutil, json, ntpath
 temporaryDatabasePath = os.path.abspath('./') + '/temporary/'
 from minio import Minio
 from minio.error import (ResponseError, BucketAlreadyOwnedByYou, BucketAlreadyExists)
-from pkg_resources import resource_filename
 
 
 access_key = None
 secret_key = None
 
-filePath = resource_filename(__name__, 'secret.json')
+filePath = './secret.json'
 with open(filePath, 'r') as json_file:
     data = json.load(json_file)
     server = data['server']
