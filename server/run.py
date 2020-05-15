@@ -1,6 +1,5 @@
 import time, json
 from flask import Flask, render_template, request, redirect, url_for
-from flask_script import Manager
 from server.cache import ExtendedLFUCache
 from logging import FileHandler, Formatter
 import server.catifierAdapter as catifierAdapter
@@ -10,6 +9,14 @@ import server.serverHelper as serverHelper
 
 # Create cache
 cache = ExtendedLFUCache(maxsize=10)
+
+
+# Initialize cache
+# logger.info('Accounts retrieved: ')
+# logger.info(accounts)
+for account in dataBaseAdapter.get_accounts_from_bucket():
+    data = dataBaseAdapter.get_results_from_bucket(account)
+    cache[account] = data
 
 
 # Create Flask app
@@ -23,30 +30,7 @@ flask_app = Flask(__name__)
     # datefmt='%d-%m-%Y %I:%M:%S')
 # file_handler.setFormatter(file_formatter)
 # flask_app.logger.addHandler(file_handler)
-# logger = flask_app.logger
-
-
-# Create flask app manager
-manager = Manager(flask_app)
-
-
-# Server initialization
-@manager.command
-def runserver():
-    # let's initialize cache first with database content
-    # logger.info('Server initialization')
-
-    accounts = dataBaseAdapter.get_accounts_from_bucket()
-    
-    # logger.info('Accounts retrieved: ')
-    # logger.info(accounts)
-    for account in accounts:
-        data = dataBaseAdapter.get_results_from_bucket(account)
-        cache[account] = data
-
-    # logger.info('Cache is initialized')
-
-    flask_app.run()
+# logger = flask_app.logger 
 
 
 # === Errors ===
@@ -181,9 +165,10 @@ def result():
 def send_task():
     instagramAccount = request.form.get('instagramAccount')
     userEmail = request.form.get('userEmail')
-    logger.info(f'Send task is finished: {str(instagramAccount)}, {str(userEmail)}')
+    # logger.info(f'Send task is finished: {str(instagramAccount)}, {str(userEmail)}')
     return '', 200
 
 
 if __name__ == "__main__":
-    manager.run()
+    # Run app
+    flask_app.run() 
